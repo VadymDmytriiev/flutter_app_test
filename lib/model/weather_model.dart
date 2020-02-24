@@ -10,7 +10,7 @@ class Weather {
   String main;
   String cityName;
 
-  double temperature;
+  dynamic temperature;
 
   List<Weather> forecast;
 

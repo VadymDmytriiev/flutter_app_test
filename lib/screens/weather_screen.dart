@@ -30,14 +30,16 @@ class _WeatherScreenState extends State<WeatherScreen>
     super.initState();
 
     _weatherBloc = WeatherBloc(weatherAPI: widget.weatherAPI);
-    _fetchWeatherWithLocation().catchError((error) {
-      _fetchWeatherWithCity();
-    });
+//    _fetchWeatherWithLocation().catchError((error) {
+//      _fetchWeatherWithCity();
+//      setState(() {});
+//    });
+    _fetchWeatherWithLocation();
+    _fetchWeatherWithCity();
 
     _fadeController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
-    _fadeAnimation =
-        CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
+    _fadeAnimation = CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
   }
 
   @override
@@ -64,6 +66,7 @@ class _WeatherScreenState extends State<WeatherScreen>
             opacity: _fadeAnimation,
             child: BlocBuilder(
               bloc: _weatherBloc,
+              // ignore: missing_return
               builder: (_, WeatherState weatherState) {
                 if (weatherState is WeatherLoaded) {
                   this._nameOfTheCity = weatherState.weather.cityName;
@@ -133,7 +136,7 @@ class _WeatherScreenState extends State<WeatherScreen>
     }
 
     Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
     _weatherBloc.dispatch(FetchWeather(
         longitude: position.longitude, latitude: position.latitude));
   }

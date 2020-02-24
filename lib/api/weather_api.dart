@@ -22,7 +22,7 @@ class WeatherAPI {
 
   Future<Weather> getWeather(String cityName, double latitude, double longitude) async {
     if (cityName == null) {
-      cityName = await getCityNameWithLocation(latitude: latitude, longitude: longitude);
+        cityName = await getCityNameWithLocation(latitude: latitude, longitude: longitude);
     }
     var weather = await getWeatherData(cityName);
     var weathers = await getWeatherForecast(cityName);
